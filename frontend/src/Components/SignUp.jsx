@@ -1,8 +1,11 @@
-import { Box, Button, Container, TextField, Typography, MenuItem, Grid } from '@mui/material';
+import { Box, Button, Container, TextField, Typography, MenuItem, Grid, IconButton, InputAdornment } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import React, { useState } from 'react';
 
 const Signup = () => {
   const [inputs, setInputs] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const inputHandler = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -64,8 +67,22 @@ const Signup = () => {
               fullWidth
               label="Password"
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               onChange={inputHandler}
+              value={inputs.password || ''}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      onClick={() => setShowPassword((show) => !show)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -80,9 +97,19 @@ const Signup = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              label="City"
-              name="city"
-              onChange={inputHandler}
+              label="Phone Number"
+              name="phoneNumber"
+              inputProps={{
+                maxLength: 10,
+                inputMode: 'numeric',
+                pattern: '[0-9]*',
+              }}
+              onChange={(e) => {
+                // Only allow numbers and max 10 digits
+                const value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+                setInputs({ ...inputs, phoneNumber: value });
+              }}
+              value={inputs.phoneNumber || ''}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -115,7 +142,9 @@ const Signup = () => {
           Already have an account? <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>Login</a>
         </Typography>
       </Container>
+      <br /><br />
     </Box>
+    
   );
 };
 
