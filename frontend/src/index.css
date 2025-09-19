@@ -1,0 +1,14 @@
+
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+    background-image: url('./Images/Gemini_Generated_Image_brhdy7brhdy7brhd.png');
+  background-size: cover;         /* Makes the image cover the whole area */
+  background-repeat: no-repeat;   /* Prevents repeating the image */
+  background-position: center;  
+}
+
